@@ -56,6 +56,11 @@ def adicionar_produto():
                 print("\nProduto Cadastrado!\n")
                 break
 
+def listar_produtos():
+    for produto in estoque:
+        dados = estoque[produto]
+        print(f"- {produto.capitalize()} / Preço: {dados["preco"]} / Quantidade: {dados["quantidade"]} / Categoria: {dados["categoria"]}")
+
 # Código principal
 menu()
 print('OBS: sempre que quiser chamar a tabela, digite "tabela"!')
@@ -77,7 +82,13 @@ while True:
         lin('-')
 
     elif escolha == '2': # Opção 2 (listar todos os produtos);
-        pass
+
+        lin('*')
+        if not estoque:
+            print("Sem produtos no estoque!")
+        else:
+            listar_produtos()
+        lin('*')
 
     elif escolha == '3': # Opção 3 (buscar produto pelo nome);
         pass
@@ -92,7 +103,8 @@ while True:
         pass
 
     elif escolha == '7': # Opção 7 (Encerrar)
-        pass
+        print("\nEncerrando...\n")
+        break
 
     else: # Opções inválidas
         print('Digite um comando válido!\n')
