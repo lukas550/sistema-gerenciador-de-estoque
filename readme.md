@@ -44,6 +44,23 @@ O tratamento de erros com `try/except` garante que entradas inválidas não trav
 
 - Python 3
 
+## Alterações futuras
+
+### Refatoração completa do código
+
+- Mover toda a lógica do `while True` para funções dedicadas — uma por opção do menu (`listar_produtos`, `buscar_produto`, `atualizar_produto`, `remover_produto`, `relatorio_geral`)
+- Eliminar a tupla `opcoes` no topo e substituí-la por um dicionário contendo o número da opção e a opção em si.
+
+### Correção de bugs
+
+- Uso de f-strings com aspas simples aninhadas (`dados['preco']` dentro de `f'...'`) que causa `SyntaxError` no Python 3.11 e versões anteriores — corrigir usando aspas duplas no dicionário ou variáveis intermediárias
+
+### Melhorar UX
+
+- Formatar todos os valores monetários com `R$ {valor:.2f}` de forma consistente (atualmente a listagem não aplica o formato)
+- Adicionar feedback visual após ações como atualizar preço ou listar produtos (ex: confirmação com os novos dados)
+- Padronizar as mensagens de erro e sucesso para seguir o mesmo estilo em todas as opçõe
+
 ## Autor
 
 Lukas — projeto desenvolvido durante os estudos de Python, aplicando os conceitos de dicionários, funções, loops, condicionais e tratamento de erros.
