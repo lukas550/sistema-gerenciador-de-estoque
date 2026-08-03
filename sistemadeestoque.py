@@ -9,40 +9,72 @@ funcionalidades = {
 }
 
 estoque = {
+
+}
 """
 Estrutura dos dados:
-Produto = {
-    Preco: float,
-    Quantidade: int,
-    Categoria: string
+produto = {
+    preco: float,
+    quantidade: int,
+    categoria: string
 }
 """
-}
 
 # Funções organizadoras e estruturais
 def lin(char, qtd=30): # Função organizadora
     return print(char * qtd)
 
-def funcionalidades(): # mostrar funcionalidades
+def menu(): # mostrar menu
     lin('-')
     for nu, funcionalidade in funcionalidades.items():
         print(f'{nu}. {funcionalidade}')
-    print()
-    print('OBS: sempre que quiser chamar a tabela, digite "tabela"!')
     lin('-')
 
+# Funções operacionais
+def adicionar_produto():
+        nome_do_produto = input("Digite o nome do produto: ").lower().strip()
+
+        if nome_do_produto in estoque:
+            escolha = input("Esse produto já está cadastrado no estoque, deseja continuar mesmo assim?\n").lower().strip()
+            if escolha in ["não", 'nao', "nn", "n"]:
+                return
+
+        while True:
+            try:
+                preco_do_produto = float(input(f"Digite o preço de {nome_do_produto.capitalize()}: "))
+                quantidade_do_produto = int(input(f"Digite a quantidade de {nome_do_produto.capitalize()}: "))
+                categoria_do_produto = input(f"Digite a categoria de {nome_do_produto.capitalize()}: ")
+            except ValueError:
+                print("\nDigite um valor válido!\n")
+                continue
+            else:
+                estoque[nome_do_produto] = {
+                    "preco": preco_do_produto,
+                    "quantidade": quantidade_do_produto,
+                    "categoria": categoria_do_produto
+                }
+                print("\nProduto Cadastrado!\n")
+                break
+
 # Código principal
-funcionalidades()
+menu()
+print('OBS: sempre que quiser chamar a tabela, digite "tabela"!')
 while True:
-    print('Digite o número que deseja ou comando:')
+    print("\nDigite o número que deseja ou comando:")
     escolha = input('= ').lower().strip()
     print()
 
     if escolha == 'tabela': # CMD = tabela
-        funcionalidades()
+        menu()
+
+    elif escolha == 'teste': # TEMPÓRARIO
+        print(estoque)
 
     elif escolha == '1': # Opção 1 (adicionar produto);
-        pass
+
+        lin('-')
+        adicionar_produto()
+        lin('-')
 
     elif escolha == '2': # Opção 2 (listar todos os produtos);
         pass
