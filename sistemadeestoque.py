@@ -30,7 +30,7 @@ produto = {
 def lin(char, qtd=30): # Função organizadora
     print(char * qtd)
 
-def menu(opcoes=False, edicao=True): # mostrar menu
+def menu(opcoes=False, edicao=False): # mostrar menu
     lin('-')
     if opcoes:
         for nu, funcionalidade in funcionalidades.items():
@@ -109,28 +109,34 @@ def editar_produto(produto): # Opção 4
             menu(False, True)
         
         elif escolha == "1":
+
             print(f"Preço antigo: {estoque[produto]['preco']:.2f}")
             while True:
                 try:
                     novo_preco = float(input(f"Digite o novo preço de {produto.capitalize()}: "))
-                except ValueError:
-                    print("\nDigite um valor válido!\n")
-                else:
+                    if novo_preco < 0:
+                        print(f"\nO novo preço de {produto.capitalize()} não pode ser negativo!\n")
+                        continue
                     estoque[produto]["preco"] = novo_preco
                     print(f"\nPreço de {produto.capitalize()} atulizado!\n")
                     break
+                except ValueError:
+                    print("\nDigite um valor númerico válido ao preço!\n")
 
         elif escolha == "2":
+
             print(f"Quantidade antiga: {estoque[produto]['quantidade']}")
             while True:
                 try:
                     nova_quantidade = int(input(f"Digite a nova quantidade de {produto.capitalize()}: "))
-                except ValueError:
-                    print("\nDigite um valor válido!\n")
-                else:
+                    if nova_quantidade < 0:
+                        print(f"\nA nova quantidade de {produto.capitalize()} não pode ser negativa!")
+                        continue
                     estoque[produto]["quantidade"] = nova_quantidade
                     print(f"\nQuantidade de {produto.capitalize()} atualizada!")
                     break
+                except ValueError:
+                    print("\nDigite um valor válido!\n")
 
         elif escolha == "3":
             print(f"Categoria antiga: {estoque[produto]['categoria']}")
@@ -158,6 +164,9 @@ def excluir_produto(produto): # Opção 5
             print("\nDigite algo válido!\n")
 
 def relatorio_geral():
+    if not estoque:
+        print("\nSem produtos no estoque para gerar relatório!\n")
+        return
 
     total_quantidade = 0
     total_investido = 0.0
@@ -270,7 +279,7 @@ while True:
 
         lin('-')
         if not estoque:
-            print("\nSem produtos no estoque!\n")
+            print("\nSem produtos no estoque para gerar um relatório!\n")
         else:
             lin('=', 40)
             print("     RELATÓRIO GERAL     ")
