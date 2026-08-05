@@ -80,7 +80,7 @@ def buscar_produto(): # Opção 3
     else:
         print("\nProduto não encontrado!\n")
 
-def editar_produto(produto): # Opçao 4
+def editar_produto(produto): # Opção 4
     menu(False, True)
     print('\nSempre que quiser chamar a tabela, digite "tabela"!')
     while True:
@@ -120,12 +120,24 @@ def editar_produto(produto): # Opçao 4
             nova_categoria = input(f"Digite a nova categoria de {produto.capitalize()}: ")
 
             estoque[produto]["categoria"] = nova_categoria
-            print(f"\nQuantidade de {produto.capitalize()} atualizada!")
+            print(f"\nCategoria de {produto.capitalize()} atualizada!")
                 
         elif escolha == "4":
             print("\nEncerrando...\n")
             break
 
+def excluir_produto(produto): # Opção 5
+    while True:
+        escolha = input(f"Tem certeza que deseja excluir {produto.capitalize()}? Essa ação é IRREVERSÍVEL\n").lower().strip()
+
+        if escolha in ["sim", "ss", "s"]:
+            print("\nProduto excluido!\n")
+            del estoque[produto]
+        elif escolha in ["nao", "não", "nn", "n"]:
+            print("\nAção interrompida.\n")
+            break
+        else:
+            print("\nDigite algo válido!\n")
 
 # Código principal
 menu(True, False)
@@ -137,9 +149,6 @@ while True:
 
     if escolha == 'tabela': # tabela
         menu(True, False)
-
-    elif escolha == 'teste': # TEMPÓRARIO
-        print(estoque)
 
     elif escolha == '1': # Opção 1 (adicionar produto);
 
@@ -180,7 +189,17 @@ while True:
         lin('-')
 
     elif escolha == '5': # Opção 5 (Remover produto);
-        pass
+        lin('-')
+        if not estoque:
+            print("\nSem produtos no estoque!\n")
+        else:
+            busca = input("Digite o nome do produto que deseja excluir:\n").lower().strip()
+
+            if busca in estoque:
+                excluir_produto(busca)
+            else:
+                print("\nProduto não encontrado!\n")
+        lin('-')
 
     elif escolha == '6': # Opção 6 (Relátorio Geral)
         pass
