@@ -28,7 +28,7 @@ produto = {
 
 # Funções organizadoras e estruturais
 def lin(char, qtd=30): # Função organizadora
-    return print(char * qtd)
+    print(char * qtd)
 
 def menu(opcoes=False, edicao=True): # mostrar menu
     lin('-')
@@ -133,11 +133,58 @@ def excluir_produto(produto): # Opção 5
         if escolha in ["sim", "ss", "s"]:
             print("\nProduto excluido!\n")
             del estoque[produto]
+            break
         elif escolha in ["nao", "não", "nn", "n"]:
             print("\nAção interrompida.\n")
             break
         else:
             print("\nDigite algo válido!\n")
+
+def relatorio_geral():
+
+    total_quantidade = 0
+    total_investido = 0.0
+
+    mais_caro = max(estoque, key=lambda p: estoque[p]["preco"])
+    mais_barato = min(estoque, key=lambda p: estoque[p]["preco"])
+
+    baixo_estoque = [p for p in estoque if estoque[p]["quantidade"] < 5]
+
+    for produto in estoque:
+        dados = estoque[produto]
+        total_quantidade += dados["quantidade"]
+        total_investido += dados["preco"] * dados["quantidade"]
+
+    preco_medio = total_investido / total_quantidade if total_quantidade > 0 else 0.0
+
+    # Principal
+    lin('-')
+    print("[1] Resumo Financeiro e de estoque")
+    lin('-')
+    print()
+
+    print(f"* Total de produtos cadastrados: {len(estoque)}")
+    print(f"* Total em quantidade no estoque: {total_quantidade}")
+    print(f"* Valor total investido: {total_investido:.2f}")
+    print(f"* Preço médio dos produtos: {preco_medio:.2f}")
+    print()
+
+    lin('-')
+    print("[2] Destaques")
+    lin('-')
+    print()
+
+    print(f"* Produto mais caro: {mais_caro.capitalize()} (R$ {estoque[mais_caro]['preco']:.2f})")
+    print(f"* Produto mais barato: {mais_barato.capitalize()} (R$ {estoque[mais_barato]['preco']:.2f})")
+    if not baixo_estoque:
+        print("\nTodos os produtos estão reeabastecidos!\n")
+    else:
+        lin('~', 40)
+        print("     Produtos em baixo estoque ou sem estoque     ")
+        lin('~', 40)
+        for p in baixo_estoque:
+            print(f"- {p.capitalize()}: {estoque[p]['quantidade']} unidades")
+
 
 # Código principal
 menu(True, False)
@@ -189,6 +236,7 @@ while True:
         lin('-')
 
     elif escolha == '5': # Opção 5 (Remover produto);
+
         lin('-')
         if not estoque:
             print("\nSem produtos no estoque!\n")
@@ -202,7 +250,16 @@ while True:
         lin('-')
 
     elif escolha == '6': # Opção 6 (Relátorio Geral)
-        pass
+
+        lin('-')
+        if not estoque:
+            print("\nSem produtos no estoque!\n")
+        else:
+            lin('=', 40)
+            print("     RELATÓRIO GERAL     ")
+            lin('=', 40)
+            relatorio_geral()
+        lin('-')
 
     elif escolha == '7': # Opção 7 (Encerrar)
         print("\nEncerrando...\n")
