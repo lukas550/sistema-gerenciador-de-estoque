@@ -288,8 +288,10 @@ while True:
         lin('-')
 
     elif escolha == '7': # Opção 7 (Encerrar)
-        print("\nEncerrando...\n")
-        break
+        escolha = input("Realmente deseja encerrar?\n")
+        if escolha not in ["nao", "não", "nn", "n"]:
+            print("\nEncerrando...\n")
+            break
 
     else: # Opções inválidas
         print('Digite um comando válido!\n')
