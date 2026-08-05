@@ -42,29 +42,46 @@ def menu(opcoes=False, edicao=True): # mostrar menu
 
 # Funções operacionais
 def adicionar_produto(): # Opção 1
-        nome_do_produto = input("Digite o nome do produto: ").lower().strip()
+    nome_do_produto = input("Digite o nome do produto: ").lower().strip()
 
-        if nome_do_produto in estoque:
-            escolha = input("Esse produto já está cadastrado no estoque, deseja continuar mesmo assim?\n").lower().strip()
-            if escolha in ["não", 'nao', "nn", "n"]:
-                return
+    if not nome_do_produto:
+        print("\nO nome do produto não pode ser vazio!\n")
+        return
 
-        while True:
-            try:
-                preco_do_produto = float(input(f"Digite o preço de {nome_do_produto.capitalize()}: "))
-                quantidade_do_produto = int(input(f"Digite a quantidade de {nome_do_produto.capitalize()}: "))
-                categoria_do_produto = input(f"Digite a categoria de {nome_do_produto.capitalize()}: ")
-            except ValueError:
-                print("\nDigite um valor válido!\n")
+    if nome_do_produto in estoque:
+        escolha = input("Esse produto já está cadastrado no estoque. Deseja sobreescrever os dados?\n").lower().strip()
+        if escolha not in ["sim", "ss", "s"]:
+            print("\nOperação cancelada.\n")
+            return
+
+    while True: # Validação do preço
+        try:
+            preco_do_produto = float(input(f"Digite o preço de {nome_do_produto.capitalize()}: "))
+            if preco_do_produto < 0:
+                print("\nO preço do produto não pode ser negativo!\n")
                 continue
-            else:
-                estoque[nome_do_produto] = {
-                    "preco": preco_do_produto,
-                    "quantidade": quantidade_do_produto,
-                    "categoria": categoria_do_produto
-                }
-                print("\nProduto Cadastrado!\n")
-                break
+            break
+        except ValueError:
+            print("\nDigite um valor númerico válido ao preço!\n")
+
+    while True: # Validação de quantidade
+        try:
+            quantidade_do_produto = int(input(f"Digite a quantidade de {nome_do_produto.capitalize()}: "))
+            if quantidade_do_produto < 0:
+                print("\nA quantidade não pode ser negativa!\n")
+                continue
+            break
+        except ValueError:
+            print("\nDigite um valor inteiro válido a quantidade!\n")
+
+    categoria_do_produto = input(f"Digite a categoria de {nome_do_produto.capitalize()}")
+
+    estoque[nome_do_produto] = {
+        "preco": preco_do_produto,
+        "quantidade": quantidade_do_produto,
+        "categoria": categoria_do_produto
+    }
+    print("\nProduto Cadastrado!\n")
 
 def listar_produtos(): # Opção 2
     for produto in estoque:
