@@ -13,7 +13,7 @@ Cada produto cadastrado possui quatro informações: nome, preço, quantidade e 
 - Adicionar produto ao estoque, com verificação de duplicatas
 - Listar todos os produtos cadastrados com suas informações completas
 - Buscar produto pelo nome
-- Atualizar preço ou quantidade de um produto existente
+- Atualizar preço, quantidade ou categoria de um produto existente
 - Remover produto do estoque
 - Relatório geral com total de produtos, valor total em estoque e produtos com quantidade zero
 - Comando "tabela" para exibir o menu a qualquer momento
@@ -34,32 +34,64 @@ O programa é dividido em funções, cada uma responsável por uma parte especí
 
 - `lin`: imprime uma linha decorativa no terminal para organizar a saída visualmente.
 
-- `funcionalidades`: exibe o menu com todas as opções disponíveis.
+- `menu`: exibe o menu principal ou o submenu de edição, dependendo dos parâmetros recebidos.
 
-- `adicionar_produto`: cadastra um produto no dicionário de estoque e exibe uma confirmação.
+- `adicionar_produto`: cadastra um produto no dicionário de estoque, com validação de preço, quantidade e verificação de duplicatas.
+
+- `listar_produtos`: exibe todos os produtos cadastrados com suas informações formatadas.
+
+- `buscar_produto`: localiza um produto pelo nome e exibe seus dados.
+
+- `editar_produto`: permite alterar preço, quantidade ou categoria de um produto existente.
+
+- `excluir_produto`: remove um produto do estoque após confirmação do usuário.
+
+- `relatorio_geral`: exibe um resumo financeiro do estoque, incluindo valor total investido, preço médio, produto mais caro, mais barato e itens em baixo estoque.
 
 O tratamento de erros com `try/except` garante que entradas inválidas não travem o programa, especialmente nas opções de atualização de preço e quantidade.
+
+## Bugs encontrados
+
+- **Typo em mensagem de confirmação:** na função `editar_produto`, a mensagem exibe `"atulizado"` em vez de `"atualizado"` ao confirmar a edição do preço.
+
+- **Typo no dicionário `funcionalidades`:** a chave `"6"` está escrita como `"Relátorio Geral"` (acento incorreto) em vez de `"Relatório Geral"`.
+
+- **`input` sem dois-pontos na categoria:** em `adicionar_produto`, o input de categoria termina sem `:` — `f"Digite a categoria de {nome_do_produto.capitalize()}"` — diferente do padrão usado em todos os outros inputs do código.
+
+- **Typo em mensagem do relatório:** a mensagem `"reeabastecidos"` contém duplo `e`; o correto é `"reabastecidos"`.
+
+- **Verificação duplicada no relatório:** o loop principal já verifica `if not estoque` antes de chamar `relatorio_geral()`, mas a própria função repete essa verificação internamente. A checagem dentro da função é redundante.
+
+- **Falta de `.lower().strip()` na confirmação de saída:** na opção 7 (encerrar), o `input` de confirmação não aplica `.lower().strip()`, ao contrário do padrão adotado no restante do código — o que pode causar comportamento inesperado se o usuário digitar com espaço ou letras maiúsculas.
+
+## Alterações futuras
+
+### Refatoração
+
+- Substituir a variável global `estoque` por uma abordagem com passagem explícita de parâmetros nas funções, tornando o código mais modular e testável
+
+### Persistência de dados
+
+- Adicionar suporte a manipulação de arquivos para salvar e carregar o estoque entre sessões, com suporte a dois formatos:
+  - **JSON** — para estrutura de dados organizada e fácil de inspecionar
+  - **TXT** — para uma alternativa simples de leitura e escrita
+
+### Correção dos bugs listados acima
+
+- Corrigir os typos nas mensagens e no dicionário de funcionalidades
+- Adicionar `:` ao input de categoria em `adicionar_produto`
+- Remover a verificação duplicada de estoque vazio dentro de `relatorio_geral`
+- Adicionar `.lower().strip()` ao input de confirmação da opção 7
+
+### Melhorar UX
+
+- Formatar todos os valores monetários com `R$ {valor:.2f}` de forma consistente
+- Adicionar feedback visual após ações como atualizar preço ou listar produtos (ex: confirmação com os novos dados)
+- Padronizar as mensagens de erro e sucesso para seguir o mesmo estilo em todas as opções
 
 ## Tecnologias utilizadas
 
 - Python 3
-
-## Alterações futuras
-
-### Refatoração completa do código
-
-- Mover toda a lógica do `while True` para funções dedicadas — uma por opção do menu (`listar_produtos`, `buscar_produto`, `atualizar_produto`, `remover_produto`, `relatorio_geral`)
-- Eliminar a tupla `opcoes` no topo e substituí-la por um dicionário contendo o número da opção e a opção em si.
-
-### Correção de bugs
-
-- Uso de f-strings com aspas simples aninhadas (`dados['preco']` dentro de `f'...'`) que causa `SyntaxError` no Python 3.11 e versões anteriores — corrigir usando aspas duplas no dicionário ou variáveis intermediárias
-
-### Melhorar UX
-
-- Formatar todos os valores monetários com `R$ {valor:.2f}` de forma consistente (atualmente a listagem não aplica o formato)
-- Adicionar feedback visual após ações como atualizar preço ou listar produtos (ex: confirmação com os novos dados)
-- Padronizar as mensagens de erro e sucesso para seguir o mesmo estilo em todas as opçõe
 
 ## Autor
 
