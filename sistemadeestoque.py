@@ -4,7 +4,7 @@ funcionalidades = {
     "3": "Buscar Produto",
     "4": "Editar produto",
     "5": "Remover produto",
-    "6": "Relátorio Geral",
+    "6": "Relatório Geral",
     "7": 'Sair'
 }
 edicoes = {
@@ -74,7 +74,7 @@ def adicionar_produto(): # Opção 1
         except ValueError:
             print("\nDigite um valor inteiro válido a quantidade!\n")
 
-    categoria_do_produto = input(f"Digite a categoria de {nome_do_produto.capitalize()}")
+    categoria_do_produto = input(f"Digite a categoria de {nome_do_produto.capitalize()}: ")
 
     estoque[nome_do_produto] = {
         "preco": preco_do_produto,
@@ -118,7 +118,7 @@ def editar_produto(produto): # Opção 4
                         print(f"\nO novo preço de {produto.capitalize()} não pode ser negativo!\n")
                         continue
                     estoque[produto]["preco"] = novo_preco
-                    print(f"\nPreço de {produto.capitalize()} atulizado!\n")
+                    print(f"\nPreço de {produto.capitalize()} atualizado!\n")
                     break
                 except ValueError:
                     print("\nDigite um valor númerico válido ao preço!\n")
@@ -203,7 +203,7 @@ def relatorio_geral():
     print(f"* Produto mais caro: {mais_caro.capitalize()} (R$ {estoque[mais_caro]['preco']:.2f})")
     print(f"* Produto mais barato: {mais_barato.capitalize()} (R$ {estoque[mais_barato]['preco']:.2f})")
     if not baixo_estoque:
-        print("\nTodos os produtos estão reeabastecidos!\n")
+        print("\nTodos os produtos estão reabastecidos!\n")
     else:
         lin('~', 40)
         print("     Produtos em baixo estoque ou sem estoque     ")
@@ -288,7 +288,7 @@ while True:
         lin('-')
 
     elif escolha == '7': # Opção 7 (Encerrar)
-        escolha = input("Realmente deseja encerrar?\n")
+        escolha = input("Realmente deseja encerrar?\n").lower().strip()
         if escolha not in ["nao", "não", "nn", "n"]:
             print("\nEncerrando...\n")
             break
