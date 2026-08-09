@@ -50,19 +50,6 @@ O programa é dividido em funções, cada uma responsável por uma parte especí
 
 O tratamento de erros com `try/except` garante que entradas inválidas não travem o programa, especialmente nas opções de atualização de preço e quantidade.
 
-## Bugs encontrados
-
-- **Typo em mensagem de confirmação:** na função `editar_produto`, a mensagem exibe `"atulizado"` em vez de `"atualizado"` ao confirmar a edição do preço.
-
-- **Typo no dicionário `funcionalidades`:** a chave `"6"` está escrita como `"Relátorio Geral"` (acento incorreto) em vez de `"Relatório Geral"`.
-
-- **`input` sem dois-pontos na categoria:** em `adicionar_produto`, o input de categoria termina sem `:` — `f"Digite a categoria de {nome_do_produto.capitalize()}"` — diferente do padrão usado em todos os outros inputs do código.
-
-- **Typo em mensagem do relatório:** a mensagem `"reeabastecidos"` contém duplo `e`; o correto é `"reabastecidos"`.
-
-- **Verificação duplicada no relatório:** o loop principal já verifica `if not estoque` antes de chamar `relatorio_geral()`, mas a própria função repete essa verificação internamente. A checagem dentro da função é redundante.
-
-- **Falta de `.lower().strip()` na confirmação de saída:** na opção 7 (encerrar), o `input` de confirmação não aplica `.lower().strip()`, ao contrário do padrão adotado no restante do código — o que pode causar comportamento inesperado se o usuário digitar com espaço ou letras maiúsculas.
 
 ## Alterações futuras
 
@@ -75,13 +62,6 @@ O tratamento de erros com `try/except` garante que entradas inválidas não trav
 - Adicionar suporte a manipulação de arquivos para salvar e carregar o estoque entre sessões, com suporte a dois formatos:
   - **JSON** — para estrutura de dados organizada e fácil de inspecionar
   - **TXT** — para uma alternativa simples de leitura e escrita
-
-### Correção dos bugs listados acima
-
-- Corrigir os typos nas mensagens e no dicionário de funcionalidades
-- Adicionar `:` ao input de categoria em `adicionar_produto`
-- Remover a verificação duplicada de estoque vazio dentro de `relatorio_geral`
-- Adicionar `.lower().strip()` ao input de confirmação da opção 7
 
 ### Melhorar UX
 
