@@ -50,20 +50,20 @@ O programa é dividido em funções, cada uma responsável por uma parte especí
 
 O tratamento de erros com `try/except` garante que entradas inválidas não travem o programa, especialmente nas opções de atualização de preço e quantidade.
 
-
 ## Alterações futuras
 
-### Refatoração
+### Estrutura modular
 
+- Dividir o projeto em módulos organizados por responsabilidade (ex: operações de estoque, interface de menu, persistência de dados), substituindo o arquivo único atual por um pacote com múltiplos arquivos
+- Transformar `sistemadeestoque.py` no arquivo principal do projeto, responsável apenas por orquestrar a execução e importar as funcionalidades dos módulos
 - Substituir a variável global `estoque` por uma abordagem com passagem explícita de parâmetros nas funções, tornando o código mais modular e testável
 
 ### Persistência de dados
 
-- Adicionar suporte a manipulação de arquivos para salvar e carregar o estoque entre sessões, com suporte a dois formatos:
-  - **JSON** — para estrutura de dados organizada e fácil de inspecionar
-  - **TXT** — para uma alternativa simples de leitura e escrita
+- Implementar persistência em **JSON**, permitindo salvar e carregar o estoque entre sessões de forma estruturada
+- Adicionar tratamento de erros para leitura e escrita de arquivos (ex: arquivo inexistente, JSON corrompido)
 
-### Melhorar UX
+### Melhorias de UX
 
 - Formatar todos os valores monetários com `R$ {valor:.2f}` de forma consistente
 - Adicionar feedback visual após ações como atualizar preço ou listar produtos (ex: confirmação com os novos dados)
