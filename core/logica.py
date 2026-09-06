@@ -30,10 +30,24 @@ def listar_produtos(estoque):
         print("\nSem produtos no estoque!\n")
     else:
         for produto in estoque:
-            print(f"- Nome: {produto['produto']} | Preço: {produto['preco']:.2f} | Quantidade: {produto['quantidade']} | Categoria: {produto['categoria']}")
+            print(f"- Nome: {produto['produto']} | Preço: R$ {produto['preco']:.2f} | Quantidade: {produto['quantidade']} | Categoria: {produto['categoria']}")
 
-def buscar_produto():
-    pass
+def buscar_produto(produto_buscado, estoque):
+
+    if not estoque or not produto_buscado.strip().lower():
+        print("\nEstoque ou produto buscado inválidos!\n")
+    else:
+        encontrado = False
+
+        for produto in estoque:
+            if produto["produto"].lower().strip() == produto_buscado.strip().lower():
+                print(f"\n- Nome: {produto['produto']} | Preço: R$ {produto['preco']:.2f} | Quantidade: {produto['quantidade']} | Categoria: {produto['categoria']}")
+
+                encontrado = True
+                break
+
+        if not encontrado:
+            print(f"\nO produto {produto_buscado} não foi encontrado!\n")
 
 def editar_produto():
     pass
