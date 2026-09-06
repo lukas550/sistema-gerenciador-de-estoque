@@ -24,8 +24,13 @@ def adicionar_produto(nome, preco, quantidade, categoria):
 
     return produto
 
-def listar_produtos():
-    pass
+def listar_produtos(estoque):
+
+    if not estoque:
+        print("\nSem produtos no estoque!\n")
+    else:
+        for produto in estoque:
+            print(f"- Nome: {produto['produto']} | Preço: {produto['preco']:.2f} | Quantidade: {produto['quantidade']} | Categoria: {produto['categoria']}")
 
 def buscar_produto():
     pass
