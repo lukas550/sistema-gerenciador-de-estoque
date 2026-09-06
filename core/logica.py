@@ -36,6 +36,7 @@ def buscar_produto(produto_buscado, estoque):
 
     if not estoque or not produto_buscado.strip().lower():
         print("\nEstoque ou produto buscado inválidos!\n")
+
     else:
         encontrado = False
 
@@ -87,8 +88,26 @@ def editar_produto(escolha, produto_editado):
         produto_editado['categoria'] = nova_categoria
         print(f"\nA categoria de {produto_editado['produto'].capitalize()} foi atualizada!\n")
 
-def excluir_produto():
-    pass
+def excluir_produto(produto_para_excluir, estoque):
+
+    if not produto_para_excluir.strip().lower() or not estoque:
+        print("\nProduto ou estoque inválidos!\n")
+
+    else:
+        encontrado = False
+        for produto in estoque:
+            if produto["produto"].lower().strip() == produto_para_excluir.strip().lower():
+                produto_encontrado = produto
+
+                encontrado = True
+                break
+
+        if not encontrado:
+            print(f"\nProduto {produto_para_excluir.capitalize()} não encontrado!")
+
+            return  
+        else:
+            return produto_encontrado
 
 def gerar_relatorio():
     pass
