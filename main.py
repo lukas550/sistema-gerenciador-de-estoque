@@ -107,11 +107,11 @@ while True:
 
             escolha_edicao = input(f"\nDigite o número que deseja editar em {produto_editar["produto"].capitalize()}: ").lower().strip()
 
-            if escolha in ["1", "2", "3"]:
+            if escolha_edicao in ["1", "2", "3"]:
                 editar_produto(escolha_edicao, produto_editar)
                 salvar_arquivo(estoque)
 
-            elif escolha == "4":
+            elif escolha_edicao == "4":
                 print("\nEncerrando edições...\n")
                 break
 
