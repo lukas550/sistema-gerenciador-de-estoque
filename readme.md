@@ -1,78 +1,97 @@
 # Sistema de Estoque
 
-Sistema de terminal desenvolvido em Python para gerenciamento de produtos em estoque. O usuário pode cadastrar, listar, buscar, atualizar e remover produtos, além de gerar um relatório geral com informações sobre o estoque.
+Sistema de terminal desenvolvido em Python para gerenciamento de produtos em estoque. O usuário pode cadastrar, listar, buscar, atualizar e remover produtos, além de gerar um relatório geral com informações sobre o estoque. Os dados são persistidos em um arquivo JSON, mantendo o estoque entre sessões.
 
 ## Como funciona
 
 Ao iniciar o programa, um menu é exibido com sete opções. O usuário navega pelo sistema digitando o número da opção desejada ou o comando "tabela" para exibir o menu novamente a qualquer momento.
 
-Cada produto cadastrado possui quatro informações: nome, preço, quantidade e categoria. Todos os dados ficam armazenados em memória durante a execução do programa.
+Cada produto cadastrado possui quatro informações: nome, preço, quantidade e categoria. Ao iniciar a aplicação, o estoque é carregado automaticamente do arquivo `estoque.json`; toda alteração (cadastro, edição ou remoção) é salva de volta nesse arquivo.
 
 ## Funcionalidades
 
-- Adicionar produto ao estoque, com verificação de duplicatas
+- Adicionar produto ao estoque, com verificação de duplicatas e confirmação para sobrescrita
 - Listar todos os produtos cadastrados com suas informações completas
 - Buscar produto pelo nome
-- Atualizar preço, quantidade ou categoria de um produto existente
-- Remover produto do estoque
-- Relatório geral com total de produtos, valor total em estoque e produtos com quantidade zero
+- Editar preço, quantidade ou categoria de um produto existente
+- Remover produto do estoque, com confirmação obrigatória antes da exclusão
+- Relatório geral com total de produtos, quantidade total, valor investido, preço médio, produto mais caro e mais barato, e produtos com baixo estoque
 - Comando "tabela" para exibir o menu a qualquer momento
+- Persistência automática dos dados em JSON entre sessões
 
 ## Como executar
 
-1. Certifique-se de ter o Python 3 instalado.
-2. Clone este repositório ou baixe o arquivo `sistemadeestoque.py`.
-3. Execute o programa pelo terminal:
+1. Certifique-se de ter o Python 3.10 ou superior instalado.
+2. Clone este repositório:
    ```
-   python sistemadeestoque.py
+   git clone https://github.com/lukas550/sistema-gerenciador-de-estoque.git
    ```
-4. Siga as instruções exibidas na tela.
+3. Acesse o diretório do projeto:
+   ```
+   cd sistema-gerenciador-de-estoque
+   ```
+4. Execute o programa pelo terminal:
+   ```
+   python main.py
+   ```
+5. Siga as instruções exibidas na tela.
 
-## Estrutura do código
+Nenhuma dependência externa é necessária. A aplicação utiliza apenas a biblioteca padrão do Python (`json`).
 
-O programa é dividido em funções, cada uma responsável por uma parte específica:
+## Estrutura do projeto
 
-- `lin`: imprime uma linha decorativa no terminal para organizar a saída visualmente.
+O projeto é dividido em módulos organizados por responsabilidade:
 
-- `menu`: exibe o menu principal ou o submenu de edição, dependendo dos parâmetros recebidos.
+```
+sistema-gerenciador-de-estoque/
+│
+├── main.py              — Arquivo principal, orquestra os módulos e controla o menu
+│
+└── core/
+    ├── logica.py         — Funções de CRUD: adicionar, listar, buscar, editar, excluir e gerar relatório
+    ├── armazenamento.py  — Salvamento e carregamento do estoque em arquivo JSON
+    └── organizacao.py    — Funções auxiliares de interface (linhas decorativas, exibição de menus)
+```
 
-- `adicionar_produto`: cadastra um produto no dicionário de estoque, com validação de preço, quantidade e verificação de duplicatas.
+**Responsabilidade de cada módulo:**
 
-- `listar_produtos`: exibe todos os produtos cadastrados com suas informações formatadas.
+- `main.py`: contém o loop principal e a lógica de navegação entre as opções do menu, chamando as funções dos demais módulos.
 
-- `buscar_produto`: localiza um produto pelo nome e exibe seus dados.
+- `core/logica.py`: implementa as regras de negócio do estoque, incluindo validação de dados (preço e quantidade numéricos e não negativos, nome e categoria obrigatórios).
 
-- `editar_produto`: permite alterar preço, quantidade ou categoria de um produto existente.
+- `core/armazenamento.py`: responsável por `salvar_arquivo` e `carregar_arquivo`, com tratamento de erros para arquivo inexistente, JSON corrompido e falhas de escrita.
 
-- `excluir_produto`: remove um produto do estoque após confirmação do usuário.
+- `core/organizacao.py`: contém `lin` (linha decorativa) e `menu` (exibição de opções a partir de um dicionário), reutilizadas em várias partes do projeto.
 
-- `relatorio_geral`: exibe um resumo financeiro do estoque, incluindo valor total investido, preço médio, produto mais caro, mais barato e itens em baixo estoque.
+**Estrutura de dados de cada produto:**
 
-O tratamento de erros com `try/except` garante que entradas inválidas não travem o programa, especialmente nas opções de atualização de preço e quantidade.
+```python
+{
+    "produto": str,
+    "preco": float,
+    "quantidade": int,
+    "categoria": str
+}
+```
 
-## Alterações futuras
-
-### Estrutura modular
-
-- Dividir o projeto em módulos organizados por responsabilidade (ex: operações de estoque, interface de menu, persistência de dados), substituindo o arquivo único atual por um pacote com múltiplos arquivos
-- Transformar `sistemadeestoque.py` no arquivo principal do projeto, responsável apenas por orquestrar a execução e importar as funcionalidades dos módulos
-- Substituir a variável global `estoque` por uma abordagem com passagem explícita de parâmetros nas funções, tornando o código mais modular e testável
-
-### Persistência de dados
-
-- Implementar persistência em **JSON**, permitindo salvar e carregar o estoque entre sessões de forma estruturada
-- Adicionar tratamento de erros para leitura e escrita de arquivos (ex: arquivo inexistente, JSON corrompido)
-
-### Melhorias de UX
-
-- Formatar todos os valores monetários com `R$ {valor:.2f}` de forma consistente
-- Adicionar feedback visual após ações como atualizar preço ou listar produtos (ex: confirmação com os novos dados)
-- Padronizar as mensagens de erro e sucesso para seguir o mesmo estilo em todas as opções
+O estoque é uma lista de dicionários nesse formato, persistida no arquivo `estoque.json` (ignorado pelo Git, por se tratar de dado gerado em tempo de execução).
 
 ## Tecnologias utilizadas
 
-- Python 3
+**Linguagem:**
+- Python 3.10+
+
+**Fundamentos aplicados:**
+- Estrutura modular com múltiplos arquivos e importação entre módulos
+- Persistência de dados em JSON (`json.dump`, `json.load`)
+- Tipos de dados: strings, floats, inteiros, listas e dicionários
+- Funções com parâmetros e retorno
+- Estruturas condicionais (`if`, `elif`, `else`)
+- Laços de repetição (`while`, `for`)
+- Tratamento de erros com `try`, `except` e `raise` (incluindo exceções específicas como `OSError` e `json.JSONDecodeError`)
+- Métodos de string: `.lower()`, `.strip()`, `.capitalize()`
+- Funções nativas: `len()`, `max()`, `min()`, `any()`
 
 ## Autor
 
-Lukas — projeto desenvolvido durante os estudos de Python, aplicando os conceitos de dicionários, funções, loops, condicionais e tratamento de erros.
+Lukas — projeto desenvolvido durante os estudos de Python, aplicando os conceitos de dicionários, funções, loops, condicionais, tratamento de erros e organização modular de código.
