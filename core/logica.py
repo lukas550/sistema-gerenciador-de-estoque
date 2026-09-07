@@ -129,7 +129,7 @@ def gerar_relatorio(estoque):
             total_quantidade += produto["quantidade"]
             total_investido += produto["preco"] * produto["quantidade"]
 
-        preco_medio = total_investido / total_quantidade if total_quantidade > 0 else 0.0
+        preco_medio = total_investido / len(estoque) if len(estoque) > 0 else 0.0
 
         relatorio = {
             "total_quantidade": total_quantidade,

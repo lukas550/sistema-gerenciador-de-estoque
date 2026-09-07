@@ -143,7 +143,42 @@ while True:
         lin("-")
 
     elif escolha == "6":
-        pass
+
+        print()
+        lin("=", 40)
+        print("     RELATÓRIO GERAL     ")
+        lin("=", 40)
+
+        relatorio = gerar_relatorio(estoque)
+
+        if relatorio:
+            lin("-", 40)
+            print("[1] Resumo financeiro")
+            lin("-", 40)
+
+            print(f"\nTotal em produtos: {len(estoque)}")
+            print(f"Total em quantidade: {relatorio['total_quantidade']}")
+            print(f"Valor total investido: R$ {relatorio['total_investido']:.2f}")
+            print(f"Preço médio: R$ {relatorio['preco_medio']:.2f}\n")
+
+            lin("-", 40)
+            print("[2] Destaques")
+            lin("-", 40)
+
+            print(f"\nMenor preço: {relatorio['mais_barato']['produto'].capitalize()} (R$ {relatorio['mais_barato']['preco']:.2f})")
+            print(f"Maior preço: {relatorio['mais_caro']['produto'].capitalize()} (R$ {relatorio['mais_caro']['preco']:.2f})\n")
+
+            if relatorio['baixo_estoque']:
+                lin("-", 40)
+                print("[3] Baixo estoque")
+                lin("-", 40)
+
+                for p in relatorio['baixo_estoque']:
+                    print(f"- {p['produto'].capitalize()} | Estoque: {p['quantidade']}")
+        else:
+            print("\nErro em gerar relatório!\n")
+        print()
+
 
     elif escolha == "7":
         confirmacao = input("\nDeseja encerrar? (sim/não): ").lower().strip()
