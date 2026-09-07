@@ -3,7 +3,7 @@
 def adicionar_produto(nome, preco, quantidade, categoria):
 
     if not nome.strip() or not categoria.strip():
-        raise ValueError("\nNome e categoria são obrigatório!\n")
+        raise ValueError("\nNome e categoria são obrigatórios!\n")
 
     try:
         preco_float = float(preco)
@@ -103,7 +103,7 @@ def excluir_produto(produto_para_excluir, estoque):
                 break
 
         if not encontrado:
-            print(f"\nProduto {produto_para_excluir.capitalize()} não encontrado!")
+            print(f"\nProduto {produto_para_excluir.capitalize()} não encontrado!\n")
 
             return  
         else:
@@ -129,7 +129,7 @@ def gerar_relatorio(estoque):
             total_quantidade += produto["quantidade"]
             total_investido += produto["preco"] * produto["quantidade"]
 
-        preco_medio = total_investido / len(estoque) if len(estoque) > 0 else 0.0
+        preco_medio = total_investido / total_quantidade if total_quantidade > 0 else 0.0
 
         relatorio = {
             "total_quantidade": total_quantidade,

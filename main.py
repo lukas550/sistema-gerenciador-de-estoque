@@ -108,7 +108,7 @@ while True:
             menu(edicoes)
             lin("=")
 
-            escolha_edicao = input(f"\nDigite o número que deseja editar em {produto_editar["produto"].capitalize()}: ").lower().strip()
+            escolha_edicao = input(f"\nDigite o número que deseja editar em {produto_editar['produto'].capitalize()}: ").lower().strip()
 
             if escolha_edicao in ["1", "2", "3"]:
                 editar_produto(escolha_edicao, produto_editar)
@@ -126,7 +126,7 @@ while True:
     elif escolha == "5":
 
         lin("-")
-        produto_buscado = input("\nDigite o nome do produto buscado para edição: ").strip().lower()
+        produto_buscado = input("\nDigite o nome do produto buscado para deletar: ").strip().lower()
 
         produto_a_excluir = excluir_produto(produto_buscado, estoque)
         if not produto_a_excluir:
