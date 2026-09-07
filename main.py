@@ -80,7 +80,45 @@ while True:
 
 
     elif escolha == "4":
-        pass
+
+        lin("-")
+        produto_buscado = input("\nDigite o nome do produto buscado para edição: ").strip().lower()
+
+        # Busca produto
+        encontrado = False
+        produto_editar = None
+
+        for produto in estoque:
+            if produto["produto"].lower().strip() == produto_buscado.lower().strip():
+                encontrado = True
+                produto_editar = produto
+                break
+        else:
+            if not encontrado:
+                print("\nProduto não encontrado!\n")
+                lin("-")
+                continue
+
+        # Edições:
+        while True:
+            lin("*")
+            menu(edicoes)
+            lin("*")
+
+            escolha_edicao = input(f"\nDigite o número que deseja editar em {produto_editar["produto"].capitalize()}: ").lower().strip()
+
+            if escolha in ["1", "2", "3"]:
+                editar_produto(escolha_edicao, produto_editar)
+                salvar_arquivo(estoque)
+
+            elif escolha == "4":
+                print("\nEncerrando edições...\n")
+                break
+
+            else:
+                print("\nDigite uma opção válida!\n")
+
+        lin("-")
 
     elif escolha == "5":
         pass
