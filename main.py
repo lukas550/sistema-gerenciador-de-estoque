@@ -48,7 +48,28 @@ while True:
 
         lin("-")
         try:
-            nome = input("Digite o nome do produto: ")
+            nome = input("Digite o nome do produto: ").strip().lower()
+        
+            # Validar duplicata
+            encontrado = False
+            for p in estoque:
+                if p["produto"] == nome:
+                    encontrado = True
+                    break
+        
+            if encontrado:
+                confirmar = input(f"\n'{nome.capitalize()}' já está cadastrado. Deseja sobrescrever? (sim/não): ").lower().strip()
+                if confirmar not in ["sim", "ss", "s"]:
+                    print("\nOperação cancelada.\n")
+                    lin("-")
+                    continue
+            
+            # Remover o antigo
+            for i in range(len(estoque)):
+                if estoque[i]["produto"] == nome:
+                    estoque.pop(i)
+                    break
+        
             preco = input(f"Digite o preço de {nome.capitalize()}: ")
             quantidade = input(f"Digite a quantidade de {nome.capitalize()}: ")
             categoria = input(f"Digite a categoria de {nome.capitalize()}: ")
@@ -56,7 +77,6 @@ while True:
             produto = adicionar_produto(nome, preco, quantidade, categoria)
             estoque.append(produto)
             print("\nProduto cadastrado com sucesso!\n")
-
             salvar_arquivo(estoque)
 
         except ValueError as e:
