@@ -121,7 +121,19 @@ while True:
         lin("-")
 
     elif escolha == "5":
-        pass
+
+        lin("-")
+        produto_buscado = input("\nDigite o nome do produto buscado para edição: ").strip().lower()
+
+        produto_a_excluir = excluir_produto(produto_buscado, estoque)
+        if not produto_a_excluir:
+            continue
+
+        estoque.remove(produto_a_excluir)
+        print("\nProduto excluido!\n")
+        salvar_arquivo(estoque)
+
+        lin("-")
 
     elif escolha == "6":
         pass
