@@ -20,8 +20,6 @@ def salvar_arquivo(dados_a_salvar):
         with open(ARQUIVO, "w", encoding="utf-8") as f:
             json.dump(dados_a_salvar, f, indent=4, ensure_ascii=False)
 
-        print("\nArquivo Salvo!\n")
-
     except (json.JSONDecodeError, FileNotFoundError) as e:
         print(f"\nErro no salvamento do arquivo: {e}\n")
 

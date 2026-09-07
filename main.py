@@ -31,8 +31,8 @@ estoque = carregar_arquivo()
 # Loop principal
 lin("-")
 menu(funcionalidades)
-print('Digite "tabela" para visualizar o menu novamente!')
 lin("-")
+print('Digite "tabela" para visualizar o menu novamente!')
 
 while True:
     print("\nDigite o número ou comando que deseja:")
@@ -73,9 +73,12 @@ while True:
     elif escolha == "3":
 
         lin("-")
-        produto_buscado = input("\nDigite o nome do produto buscado: ")
+        if not estoque:
+            print("\nSem produtos cadastrados no estoque!\n")
+        else:
+            produto_buscado = input("\nDigite o nome do produto buscado: ")
 
-        buscar_produto(produto_buscado, estoque)
+            buscar_produto(produto_buscado, estoque)
         lin("-")
 
 
@@ -101,9 +104,9 @@ while True:
 
         # Edições:
         while True:
-            lin("*")
+            lin("=")
             menu(edicoes)
-            lin("*")
+            lin("=")
 
             escolha_edicao = input(f"\nDigite o número que deseja editar em {produto_editar["produto"].capitalize()}: ").lower().strip()
 
@@ -129,9 +132,13 @@ while True:
         if not produto_a_excluir:
             continue
 
-        estoque.remove(produto_a_excluir)
-        print("\nProduto excluido!\n")
-        salvar_arquivo(estoque)
+        confirmacao = input(f"\nTem certeza que deseja excluir {produto_a_excluir['produto'].capitalize()}? (sim/não): ").lower().strip()
+        if confirmacao in ["sim", "ss", "s"]:
+            estoque.remove(produto_a_excluir)
+            print("\nProduto excluido!\n")
+            salvar_arquivo(estoque)
+        else:
+            print("\nOperação cancelada!\n")
 
         lin("-")
 
@@ -139,5 +146,12 @@ while True:
         pass
 
     elif escolha == "7":
-        print("\nEncerrando...\n")
-        break
+        confirmacao = input("\nDeseja encerrar? (sim/não): ").lower().strip()
+        if confirmacao in ["sim", "ss", "s"]:
+            print("\nEncerrando...\n")
+            break
+        else:
+            print("\nOperação cancelada!\n")
+
+    else:
+        print("\nDigite uma opção válida!\n")

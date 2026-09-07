@@ -30,7 +30,7 @@ def listar_produtos(estoque):
         print("\nSem produtos no estoque!\n")
     else:
         for produto in estoque:
-            print(f"- Nome: {produto['produto']} | Preço: R$ {produto['preco']:.2f} | Quantidade: {produto['quantidade']} | Categoria: {produto['categoria']}")
+            print(f"- Nome: {produto['produto'].capitalize()} | Preço: R$ {produto['preco']:.2f} | Quantidade: {produto['quantidade']} | Categoria: {produto['categoria'].capitalize()}")
 
 def buscar_produto(produto_buscado, estoque):
 
@@ -42,7 +42,7 @@ def buscar_produto(produto_buscado, estoque):
 
         for produto in estoque:
             if produto["produto"].lower().strip() == produto_buscado.strip().lower():
-                print(f"\n- Nome: {produto['produto']} | Preço: R$ {produto['preco']:.2f} | Quantidade: {produto['quantidade']} | Categoria: {produto['categoria']}")
+                print(f"\n- Nome: {produto['produto'].capitalize()} | Preço: R$ {produto['preco']:.2f} | Quantidade: {produto['quantidade']} | Categoria: {produto['categoria'].capitalize()}")
 
                 encontrado = True
                 break
