@@ -65,7 +65,10 @@ while True:
         lin("-")
 
     elif escolha == "2":
-        pass
+
+        lin("-")
+        listar_produtos(estoque)
+        lin("-")
 
     elif escolha == "3":
         pass
