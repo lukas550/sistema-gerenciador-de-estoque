@@ -109,5 +109,35 @@ def excluir_produto(produto_para_excluir, estoque):
         else:
             return produto_encontrado
 
-def gerar_relatorio():
-    pass
+def gerar_relatorio(estoque):
+
+    if not estoque:
+        print("\nSem produtos no estoque!\n")
+        return
+
+    else:
+
+        total_quantidade = 0
+        total_investido = 0.0
+
+        mais_caro = max(estoque, key=lambda p: p["preco"])
+        mais_barato = min(estoque, key=lambda p: p["preco"])
+
+        baixo_estoque = [p for p in estoque if p["quantidade"] < 5]
+
+        for produto in estoque:
+            total_quantidade += produto["quantidade"]
+            total_investido += produto["preco"] * produto["quantidade"]
+
+        preco_medio = total_investido / total_quantidade if total_quantidade > 0 else 0.0
+
+        relatorio = {
+            "total_quantidade": total_quantidade,
+            "total_investido": total_investido,
+            "mais_caro": mais_caro,
+            "mais_barato": mais_barato,
+            "baixo_estoque": baixo_estoque,
+            "preco_medio": preco_medio
+        }
+
+        return relatorio
