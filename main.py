@@ -71,7 +71,13 @@ while True:
         lin("-")
 
     elif escolha == "3":
-        pass
+
+        lin("-")
+        produto_buscado = input("\nDigite o nome do produto buscado: ")
+
+        buscar_produto(produto_buscado, estoque)
+        lin("-")
+
 
     elif escolha == "4":
         pass
