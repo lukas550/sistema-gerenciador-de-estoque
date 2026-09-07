@@ -45,7 +45,24 @@ while True:
         lin("-")
 
     elif escolha == "1":
-        pass
+
+        lin("-")
+        try:
+            nome = input("Digite o nome do produto: ")
+            preco = input(f"Digite o preço de {nome.capitalize()}: ")
+            quantidade = input(f"Digite a quantidade de {nome.capitalize()}: ")
+            categoria = input(f"Digite a categoria de {nome.capitalize()}: ")
+
+            produto = adicionar_produto(nome, preco, quantidade, categoria)
+            estoque.append(produto)
+            print("\nProduto cadastrado com sucesso!\n")
+
+            salvar_arquivo(estoque)
+
+        except ValueError as e:
+            print(f"\n{e}\n")
+
+        lin("-")
 
     elif escolha == "2":
         pass
